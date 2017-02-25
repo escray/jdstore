@@ -3,8 +3,13 @@ class CartItemsController < ApplicationController
 
   def update
     @cart = current_cart
-    @cart_items = @cart.cart_items.find_by(product_id: params[:id])
-    @cart_items.update(cart_item_params)
+    @cart_item = @cart.cart_items.find_by(product_id: params[:id])
+    if @cart_item.product.quantity >= cart_item_params[:quantity].to_i
+      flash[:notice] = 'Update Successfully!'
+    else
+      flash[:warning] = 'Store is not enough'
+    end
+    @cart_item.update(cart_item_params)
 
     redirect_to carts_path
   end

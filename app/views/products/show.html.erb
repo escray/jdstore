@@ -20,7 +20,11 @@
       $ <%= @product.price %>
     </div>
     <div class="pull-right">
-      <%= link_to("Add Cart", add_to_cart_product_path(@product), :method => :post, :class => "btn btn-primary btn-lg btn-danger") %>
+      <% if @product.quantity.present? && @product.quantity > 0 %>
+        <%= link_to("Add Cart", add_to_cart_product_path(@product), :method => :post, :class => "btn btn-primary btn-lg btn-danger") %>
+      <% else %>
+        "Sold Out! Welcome Next Time"
+      <% end %>
     </div>
   </div>
 </div>
